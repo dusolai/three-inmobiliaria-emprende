@@ -1321,9 +1321,16 @@
       }
     });
 
-    // Función para redirigir al cuestionario
+    // Redirige al evento de Calendly de "Presentación de Negocio".
+    // Pasa por el redirector del backend para registrar el clic y rellenar UTMs.
     function abrirCalendly() {
-      window.location.href = '#URL_CUESTIONARIO_EMPRENDEDOR_ESTA_PENDIENTE';
+      const BACKEND = 'https://web-78t58qun41lt.up-de-fra1-k8s-1.apps.run-on-seenode.com';
+      const params = new URLSearchParams(window.location.search);
+      const leadId = params.get('lead') || '';
+      const url = leadId
+        ? `${BACKEND}/r/grupal?l=${encodeURIComponent(leadId)}`
+        : 'https://calendly.com/arkaitzasr24/presentacion-de-negocio-three-inmobiliaria';
+      window.open(url, '_blank', 'noopener');
       return false;
     }
   </script>
