@@ -773,15 +773,44 @@
     }
     
     .contact-button.calendly {
-      background: #311B92;
-      color: #fff;
-      border: 2px solid #311B92;
+      background: linear-gradient(135deg, #7C4DFF 0%, #311B92 100%) !important;
+      color: #fff !important;
+      border: 3px solid #fff !important;
+      padding: 1.6rem 4rem !important;
+      font-size: 1.6rem !important;
+      font-weight: 900 !important;
+      letter-spacing: 1px !important;
+      box-shadow: 0 12px 35px rgba(49, 27, 146, 0.55), 0 0 0 4px rgba(124, 77, 255, 0.3) !important;
+      text-transform: uppercase;
+      transform: scale(1);
+      transition: all 0.25s ease-out;
     }
-    
+
     .contact-button.calendly:hover {
-      background: #4527A0;
-      border-color: #4527A0;
-      box-shadow: 0 15px 40px rgba(49, 27, 146, 0.4);
+      background: linear-gradient(135deg, #311B92 0%, #1A0B54 100%) !important;
+      transform: scale(1.05) !important;
+      box-shadow: 0 18px 45px rgba(49, 27, 146, 0.75), 0 0 0 6px rgba(124, 77, 255, 0.35) !important;
+    }
+
+    .contact-button.calendly.calendly-revealed {
+      animation: pulseCTA 1.6s ease-in-out infinite;
+    }
+
+    @keyframes pulseCTA {
+      0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 12px 35px rgba(49, 27, 146, 0.55), 0 0 0 4px rgba(124, 77, 255, 0.3);
+      }
+      50% {
+        transform: scale(1.06);
+        box-shadow: 0 18px 50px rgba(49, 27, 146, 0.8), 0 0 0 12px rgba(124, 77, 255, 0.2);
+      }
+    }
+
+    .cta-intermedio {
+      text-align: center;
+      margin: 3rem auto;
+      padding: 1rem;
     }
 
     /* CTA Intermedio general */
