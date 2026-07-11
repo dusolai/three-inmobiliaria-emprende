@@ -935,7 +935,7 @@
       <li><a href="#servicios">Servicios</a></li>
       <li><a href="#formacion">Formación</a></li>
       <li><a href="#portugal">Portugal</a></li>
-      <li><a href="#testimonios">Testimonios</a></li>
+      <!-- <li><a href="#testimonios">Testimonios</a></li> -->  <!-- oculto de momento -->
       <li><a href="#contacto">Contacto</a></li>
     </ul>
   </nav>
@@ -948,7 +948,7 @@
         Tu Camino al Éxito con <span class="highlight">Prescripciones Inmobiliarias</span>
       </h1>
       <p>Accede a un sistema probado que te permite <strong>generar honorarios por prescribir</strong>. Ideal para quienes buscan un ingreso extra con <strong>máxima flexibilidad horaria sin dejar tu trabajo actual</strong>.</p>
-      <a href="#contacto" class="cta-primary">Quiero Acelerar Mis Ventas Ahora</a>
+      <a href="#paso1-vsl" class="cta-primary">Quiero Acelerar Mis Ventas Ahora</a>
       <a href="#beneficios" class="cta-secondary">Ver Cómo Funciona</a>
       <div style="margin-top: 20px;">
         <button onclick="abrirCalendly()" class="contact-button calendly" style="display: inline-block; border: none; cursor: pointer;">
@@ -958,15 +958,49 @@
     </div>
   </section>
 
-  <section class="video-section">
+  <!-- ============ EMBUDO POR PASOS (desbloqueo gradual) ============ -->
+  <style id="funnel-styles">
+    .paso-badge{display:inline-block;background:linear-gradient(135deg,#311B92,#FF6B35);color:#fff;font-weight:800;letter-spacing:1px;padding:6px 18px;border-radius:999px;margin:0 0 14px;font-size:.8rem;text-transform:uppercase}
+    .webinar-wrapper{position:relative;overflow:hidden}
+    .webinar-wrapper.locked video{filter:blur(16px) brightness(.45);pointer-events:none;transform:scale(1.05)}
+    .webinar-lock{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;text-align:center;background:rgba(20,8,60,.55);border-radius:inherit;transition:opacity .6s ease}
+    .webinar-wrapper:not(.locked) .webinar-lock{opacity:0;pointer-events:none}
+    .webinar-lock-inner{max-width:440px;padding:1.5rem;color:#fff}
+    .webinar-lock .lock-icon{font-size:3.2rem;margin-bottom:.5rem}
+    .webinar-lock .lock-title{font-size:1.5rem;font-weight:800;margin-bottom:.5rem}
+    .webinar-lock .lock-text{font-size:1.05rem;opacity:.92;line-height:1.5}
+    .webinar-unlock-flash{animation:webinarPulse 1s ease 2}
+    @keyframes webinarPulse{0%,100%{box-shadow:0 0 0 rgba(255,107,53,0)}50%{box-shadow:0 0 45px rgba(255,107,53,.85)}}
+  </style>
+
+  <section class="video-section" id="paso1-vsl">
+    <span class="paso-badge">Paso 1 · Vídeo</span>
     <div class="video-container">
-      <video id="video1" loop="" muted="" playsinline="" controls="">
+      <video id="video1" playsinline="" controls="">
         <source src="1.mp4" type="video/mp4">
         Tu navegador no soporta el elemento de video.
       </video>
 
     </div>
     <p class="video-description">Descubre cómo Three Inmobiliaria está transformando el sector inmobiliario digital.</p>
+  </section>
+
+  <section class="video-section" id="paso2-webinar">
+    <span class="paso-badge">Paso 2 · Webinar completo</span>
+    <div class="video-container webinar-wrapper locked" id="webinarWrapper">
+      <video id="videoWebinar" playsinline="" controls="" preload="none">
+        <source src="webinar.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+      </video>
+      <div class="webinar-lock" id="webinarLock">
+        <div class="webinar-lock-inner">
+          <div class="lock-icon">🔒</div>
+          <div class="lock-title">Webinar bloqueado</div>
+          <div class="lock-text">Termina de ver el vídeo del Paso 1 para desbloquear el webinar completo de Three Inmobiliaria.</div>
+        </div>
+      </div>
+    </div>
+    <p class="video-description">Webinar completo con nuestra experta (27 min).</p>
   </section>
 
   <div class="trust-bar">
@@ -1168,18 +1202,20 @@
         <p>Esto significa que <strong>cualquier persona, resida en España o en Portugal</strong>, puede aprovechar el mismo sistema y la misma oportunidad. Una puerta abierta para los prescriptores portugueses y para quienes residen en España.</p>
       </div>
       <div class="solution-image">
-        <div class="video-container">
-          <video controls="" playsinline="" poster="" style="width:100%; display:block; background:#000; aspect-ratio:16/9;">
+        <div class="video-container webinar-wrapper locked js-extra">
+          <video controls="" playsinline="" poster="" preload="none" style="width:100%; display:block; background:#000; aspect-ratio:16/9;">
             <source src="portugal.mp4" type="video/mp4">
             Tu navegador no soporta el elemento de video.
           </video>
+          <div class="webinar-lock"><div class="webinar-lock-inner"><div class="lock-icon">🔒</div><div class="lock-title">Disponible tras el webinar</div></div></div>
         </div>
         <!-- NOTA: añadir el vídeo en portugués (portugal.mp4) cuando esté disponible. -->
       </div>
     </div>
   </section>
 
-  <section id="testimonios" class="testimonials-section">
+  <!-- TESTIMONIOS OCULTOS DE MOMENTO (faltan testimonio1/2/3.mp4). Para reactivar: quita el style="display:none" de la línea de abajo. -->
+  <section id="testimonios" class="testimonials-section" style="display:none">
     <div class="testimonials-header">
       <h2>Historias de Éxito de Nuestros Prescriptores</h2>
       <p>Personas reales generando ingresos adicionales de manera sencilla</p>
