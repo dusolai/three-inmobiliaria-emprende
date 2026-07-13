@@ -926,7 +926,13 @@
   </style>
 </head>
 <body>
-  
+
+  <!-- Botón de idioma ES/PT (lo gestiona traducir.js) -->
+  <button id="langToggle" type="button" onclick="window.__toggleLang && window.__toggleLang()" aria-label="Cambiar idioma / Mudar idioma"
+    style="position:fixed;top:12px;right:12px;z-index:99999;background:#fff;color:#311B92;border:2px solid #311B92;border-radius:999px;padding:8px 15px;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.18);line-height:1;">
+    🇵🇹 Português
+  </button>
+
   <nav>
     <ul>
       <li><a href="#inicio">Inicio</a></li>
@@ -971,6 +977,17 @@
     .webinar-lock .lock-text{font-size:1.05rem;opacity:.92;line-height:1.5}
     .webinar-unlock-flash{animation:webinarPulse 1s ease 2}
     @keyframes webinarPulse{0%,100%{box-shadow:0 0 0 rgba(255,107,53,0)}50%{box-shadow:0 0 45px rgba(255,107,53,.85)}}
+
+    /* ── Modo PORTUGUÉS (html.pt) ─────────────────────────────────
+       La versión portuguesa es más simple: VSL corto en portugués +
+       el vídeo extra de Portugal. No hay webinar en portugués, así que
+       se oculta el español, se muestra el extra desbloqueado y los
+       botones de reservar quedan visibles sin necesidad del webinar. */
+    html.pt #paso2-webinar{display:none}
+    html.pt #portugal .webinar-wrapper.locked video{filter:none;transform:none;pointer-events:auto}
+    html.pt #portugal .webinar-lock{display:none}
+    html.pt .calendly{display:inline-block !important}
+    html.pt #ctaFlotante{display:block}
   </style>
 
   <section class="video-section" id="paso1-vsl">
@@ -1374,4 +1391,5 @@
     }
   </script>
   <script src="vsl.js"></script>
+  <script src="traducir.js"></script>
 </body></html>
