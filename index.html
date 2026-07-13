@@ -979,15 +979,13 @@
     @keyframes webinarPulse{0%,100%{box-shadow:0 0 0 rgba(255,107,53,0)}50%{box-shadow:0 0 45px rgba(255,107,53,.85)}}
 
     /* ── Modo PORTUGUÉS (html.pt) ─────────────────────────────────
-       La versión portuguesa es más simple: VSL corto en portugués +
-       el vídeo extra de Portugal. No hay webinar en portugués, así que
-       se oculta el español, se muestra el extra desbloqueado y los
-       botones de reservar quedan visibles sin necesidad del webinar. */
-    html.pt #paso2-webinar{display:none}
-    html.pt #portugal .webinar-wrapper.locked video{filter:none;transform:none;pointer-events:auto}
-    html.pt #portugal .webinar-lock{display:none}
-    html.pt .calendly{display:inline-block !important}
-    html.pt #ctaFlotante{display:block}
+       La versión portuguesa usa dos vídeos EN PORTUGUÉS: el VSL corto
+       (traducir.js cambia #video1 → 1-pt.mp4) y el webinar (traducir.js
+       cambia #videoWebinar → portugal.mp4). El embudo funciona igual:
+       ver el VSL desbloquea el webinar y al terminarlo aparece el botón.
+       Se oculta solo el vídeo duplicado de la sección Portugal (ese vídeo
+       ya es el webinar), conservando su texto. */
+    html.pt #portugal .solution-image{display:none}
   </style>
 
   <section class="video-section" id="paso1-vsl">

@@ -44,7 +44,7 @@
     'Paso 2 · Webinar completo': 'Passo 2 · Webinar completo',
     'Webinar bloqueado': 'Webinar bloqueado',
     'Termina de ver el vídeo del Paso 1 para desbloquear el webinar completo de Three Inmobiliaria.': 'Termina de ver o vídeo do Passo 1 para desbloquear o webinar completo da Three Inmobiliaria.',
-    'Webinar completo con nuestra experta (27 min).': 'Webinar completo com a nossa especialista (27 min).',
+    'Webinar completo con nuestra experta (27 min).': 'Webinar completo em português.',
     '📅 Reservar mi reunión 1 a 1': '📅 Reservar a minha reunião 1 a 1',
     'Disponible tras el webinar': 'Disponível após o webinar',
 
@@ -186,17 +186,42 @@
     }
   }
 
-  // Cambia el VSL corto entre español y portugués.
+  // Cambia el VSL corto entre español y portugués. Si el VSL en portugués
+  // (1-pt.mp4) todavía no existe, vuelve al VSL en español para que NUNCA
+  // se vea roto (así, hasta que subas 1-pt.mp4, se ve el VSL español).
   function swapVSL(lang) {
     var v = document.getElementById('video1');
     if (!v) return;
     var src = v.querySelector('source');
     if (!src) return;
     var want = (lang === 'pt') ? '1-pt.mp4' : '1.mp4';
-    if (src.getAttribute('src') !== want) {
-      src.setAttribute('src', want);
-      try { v.load(); } catch (e) {}
+    if (src.getAttribute('src') === want) return;
+    src.setAttribute('src', want);
+    try { v.load(); } catch (e) {}
+    if (lang === 'pt') {
+      // Cuando falla un <source>, el evento 'error' se dispara en el propio
+      // <source> (no en el <video>). Si 1-pt.mp4 no existe todavía, volvemos
+      // al VSL en español para que no se quede en negro.
+      src.addEventListener('error', function onErr() {
+        src.removeEventListener('error', onErr);
+        if (src.getAttribute('src') === '1-pt.mp4') {
+          src.setAttribute('src', '1.mp4');
+          try { v.load(); } catch (e) {}
+        }
+      }, { once: true });
     }
+  }
+
+  // Cambia el webinar entre español (webinar.mp4) y portugués (portugal.mp4).
+  function swapWebinar(lang) {
+    var v = document.getElementById('videoWebinar');
+    if (!v) return;
+    var src = v.querySelector('source');
+    if (!src) return;
+    var want = (lang === 'pt') ? 'portugal.mp4' : 'webinar.mp4';
+    if (src.getAttribute('src') === want) return;
+    src.setAttribute('src', want);
+    try { v.load(); } catch (e) {}
   }
 
   function updateBtn(lang) {
@@ -217,6 +242,7 @@
       html.setAttribute('lang', 'es');
     }
     swapVSL(lang);
+    swapWebinar(lang);
     updateBtn(lang);
     try { localStorage.setItem('three_lang', lang); } catch (e) {}
   }
