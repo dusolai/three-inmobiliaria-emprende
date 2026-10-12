@@ -45,7 +45,7 @@
     'Webinar bloqueado': 'Webinar bloqueado',
     'Termina de ver el vídeo del Paso 1 para desbloquear el webinar completo de Three Inmobiliaria.': 'Termina de ver o vídeo do Passo 1 para desbloquear o webinar completo da Three Inmobiliaria.',
     'Webinar completo con nuestra experta (27 min).': 'Webinar completo em português.',
-    '📅 Reservar mi reunión 1 a 1': '📅 Reservar a minha reunião 1 a 1',
+    '📅 Apuntarme a la sesión de dudas': '📅 Inscrever-me na sessão de dúvidas',
     'Disponible tras el webinar': 'Disponível após o webinar',
 
     // Trust
