@@ -5,13 +5,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const BACKEND_URL = "https://web-78t58qun41lt.up-de-fra1-k8s-1.apps.run-on-seenode.com";
   const PERFIL = 'emprendedor';
 
-  // ─── Un solo vídeo, sin candados (22-10) ──────────────────────────
-  // Antes: vídeo corto → desbloqueaba el webinar → desbloqueaba el botón de
-  // reservar ("modo yincana"). Ahora hay UNA presentación (la larga) y los
-  // botones de reservar están visibles desde el principio: se reserva
-  // primero y la presentación es la llave del Zoom (lo gestiona el CRM).
-  // Lo que sigue haciendo esta página: recordar por dónde va el vídeo,
-  // impedir adelantarlo más allá de lo visto, y avisar al CRM de cada hito.
+  // ─── Primero el vídeo, después agendar (5-11) ─────────────────────
+  // Un solo vídeo. Hasta verlo ENTERO no aparece ningún botón de agendar:
+  // en su lugar sale «Ver el vídeo» (si no lo ven, no queremos que lleguen
+  // a la reunión). No se puede adelantar más allá de lo visto. Al terminar
+  // se desbloquean los botones y este navegador lo recuerda.
 
   // ─── Progreso persistente (localStorage) ─────────────────────────
   const STORE_KEY = `three_progress_${leadId || 'anon'}`;
@@ -40,20 +38,36 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   sendEvent('landing_view', { perfil: PERFIL, url: window.location.href });
 
-  // ─── 1. Botones de reservar: visibles y el flotante fijo ─────────
-  document.querySelectorAll('.calendly').forEach((btn) => btn.classList.add('calendly-revealed'));
+  // ─── 1. Botones: «Ver el vídeo» hasta terminarlo, luego «Agendar» ──
+  // Junto a cada botón de agendar va uno de «Ver el vídeo» (lo oculta el
+  // CSS en cuanto html tiene .video-visto, y al revés con los de agendar).
+  document.querySelectorAll('.calendly').forEach((btn) => {
+    const ver = document.createElement('a');
+    ver.href = '#paso2-webinar';
+    ver.className = 'ver-video';
+    ver.textContent = '▶ Ver el vídeo para poder agendar';
+    btn.parentNode.insertBefore(ver, btn);
+  });
   const flot = document.getElementById('ctaFlotante');
-  if (flot) flot.classList.add('cta-persist');
+  const desbloquear = () => {
+    document.documentElement.classList.add('video-visto');
+    document.querySelectorAll('.calendly').forEach((btn) => btn.classList.add('calendly-revealed'));
+    if (flot) flot.classList.add('cta-persist');
+  };
+  if (saved.visto) desbloquear();
 
-  // ─── 2. "Terminó la presentación": se avisa UNA vez al CRM ───────
+  // ─── 2. Terminó la presentación ENTERA: desbloquea y avisa al CRM ─
   // Se conserva el nombre del evento que ya entiende el CRM
   // (calendly_button_revealed = terminó el vídeo principal).
-  let terminada = false;
+  let terminada = Boolean(saved.visto);
   const presentacionTerminada = (motivo) => {
     if (terminada) return;
     terminada = true;
+    saved.visto = true; persist();
+    desbloquear();
     sendEvent('calendly_button_revealed', { motivo });
   };
+  const progreso = document.getElementById('progresoVideo');
 
   // ─── 3. Configurar TODOS los vídeos de la página ──────────────────
   const videos = document.querySelectorAll('video');
@@ -122,7 +136,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (!fired90 && pct >= 90) {
         fired90 = true;
         sendEvent('video_progress_90', { videoId });
-        if (videoId === 'videoWebinar') presentacionTerminada('webinar_90pct');
+      }
+      if (videoId === 'videoWebinar') {
+        const visto = Math.max(maxTimeReached, video.currentTime) / video.duration * 100;
+        if (progreso && !terminada) progreso.textContent = `Llevas un ${Math.floor(visto)}% visto. Al llegar al final podrás agendar.`;
+        if (visto >= 98) presentacionTerminada('webinar_98pct');
       }
     });
 

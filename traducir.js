@@ -241,8 +241,7 @@
       html.classList.remove('pt');
       html.setAttribute('lang', 'es');
     }
-    swapVSL(lang);
-    swapWebinar(lang);
+    // 5-11: un solo vídeo, el mismo en español y en portugués (sin cambio de fichero)
     updateBtn(lang);
     try { localStorage.setItem('three_lang', lang); } catch (e) {}
   }

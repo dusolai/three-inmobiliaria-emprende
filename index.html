@@ -1050,11 +1050,27 @@
        Se oculta solo el vídeo duplicado de la sección Portugal (ese vídeo
        ya es el webinar), conservando su texto. */
     html.pt #portugal .solution-image{display:none}
+      /* ── Primero el vídeo, después agendar (5-11) ──────────────────
+       Hasta ver la presentación ENTERA no aparece ningún botón de
+       agendar: en su lugar sale «Ver el vídeo». vsl.js pone
+       html.video-visto al terminarla (y lo recuerda en este navegador). */
+    html:not(.video-visto) .calendly,
+    html:not(.video-visto) .cta-flotante{display:none !important}
+    html.video-visto .ver-video,
+    html.video-visto .aviso-video{display:none !important}
+    .ver-video{display:inline-block;background:linear-gradient(135deg,#311B92,#5E35B1);color:#fff !important;border:3px solid #fff;border-radius:50px;padding:1.3rem 2.6rem;font-size:1.45rem;font-weight:900;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;box-shadow:0 12px 32px rgba(49,27,146,.45);cursor:pointer;animation:pulseCTA 1.6s ease-in-out infinite}
+    .aviso-video{max-width:860px;margin:0 auto 1.2rem;background:#fff4ec;border:2px solid #FF6B35;border-radius:14px;padding:1rem 1.2rem;text-align:center;color:#3a1d0f;font-size:1.08rem;line-height:1.5}
+    .aviso-video b{color:#D32F00}
+    .progreso-video{text-align:center;font-weight:700;color:#311B92;margin-top:.8rem}
+    .video-listo{display:none;text-align:center;font-size:1.25rem;font-weight:800;color:#1f7a45;margin-top:1rem}
+    html.video-visto .video-listo{display:block}
+    @media (max-width:768px){.ver-video{font-size:1.15rem;padding:1.1rem 1.4rem;width:94%}}
   </style>
 
 
   <section class="video-section" id="paso2-webinar">
     <span class="paso-badge">La presentación</span>
+    <div class="aviso-video">🔒 <b>Para poder agendar tu reunión tienes que ver el vídeo entero</b> (6 min). No se puede adelantar. Al terminar, aparecerá aquí el botón para reservar.</div>
     <div class="video-container webinar-wrapper" id="webinarWrapper">
       <video id="videoWebinar" playsinline="" controls="" preload="metadata">
         <source src="webinar.mp4" type="video/mp4">
@@ -1062,6 +1078,8 @@
       </video>
     </div>
     <p class="video-description">Presentación completa del proyecto, tras el evento nacional (6 min).</p>
+    <p class="progreso-video aviso-video-progreso" id="progresoVideo"></p>
+    <p class="video-listo">✅ ¡Listo! Ya puedes agendar tu reunión:</p>
     <div style="text-align:center;margin-top:1.2rem;">
       <button onclick="abrirCalendly()" class="contact-button calendly" style="display:inline-block;padding:14px 28px;font-size:16px;border:none;cursor:pointer;">📅 Apuntarme a la sesión de dudas</button>
     </div>
@@ -1259,20 +1277,11 @@
 
   <!-- ============ PORTUGAL ============ -->
   <section id="portugal" class="solution-section">
-    <div class="solution-content">
+    <div class="solution-content" style="grid-template-columns:1fr">
       <div class="solution-text">
         <h2>Ya Operamos También en <span class="accent">Portugal</span> 🇵🇹</h2>
         <p>Somos una multinacional que acaba de lanzar un nuevo país. El <strong>9 de abril</strong> hicimos el prelanzamiento en Oporto y el <strong>11 de mayo</strong> se realizó el lanzamiento oficial: la empresa ya opera en Portugal, también en el sector inmobiliario.</p>
         <p>Esto significa que <strong>cualquier persona, resida en España o en Portugal</strong>, puede aprovechar el mismo sistema y la misma oportunidad. Una puerta abierta para los prescriptores portugueses y para quienes residen en España.</p>
-      </div>
-      <div class="solution-image">
-        <div class="video-container webinar-wrapper js-extra">
-          <video id="videoPortugal" controls="" playsinline="" poster="" preload="none" style="width:100%; display:block; background:#000; aspect-ratio:16/9;">
-            <source src="portugal.mp4" type="video/mp4">
-            Tu navegador no soporta el elemento de video.
-          </video>
-        </div>
-        <!-- NOTA: añadir el vídeo en portugués (portugal.mp4) cuando esté disponible. -->
       </div>
     </div>
   </section>
@@ -1288,12 +1297,6 @@
          Cada tarjeta tiene su propio vídeo arriba y su texto debajo. Sustituye los src cuando lleguen los vídeos. -->
     <div class="testimonials-grid">
       <div class="testimonial-card">
-        <div class="video-container" style="margin-bottom: 1.5rem; aspect-ratio: 9/16; background:#1a0b54; display:flex; align-items:center; justify-content:center;">
-          <video controls="" playsinline="" poster="" style="width:100%; height:100%; object-fit:cover;">
-            <source src="testimonio1.mp4" type="video/mp4">
-            <span style="color:#D1C4E9;">Vídeo de testimonio próximamente</span>
-          </video>
-        </div>
         <div class="testimonial-text">
           "Empecé a colaborar con Three Inmobiliaria prescribiendo a conocidos que querían vender en mi barrio. Ahora tengo un ingreso extra constante sin dejar mi trabajo habitual. ¡Totalmente recomendado!"
         </div>
@@ -1301,12 +1304,6 @@
         <div class="testimonial-role">Prescriptora Activa</div>
       </div>
       <div class="testimonial-card">
-        <div class="video-container" style="margin-bottom: 1.5rem; aspect-ratio: 9/16; background:#1a0b54; display:flex; align-items:center; justify-content:center;">
-          <video controls="" playsinline="" poster="" style="width:100%; height:100%; object-fit:cover;">
-            <source src="testimonio2.mp4" type="video/mp4">
-            <span style="color:#D1C4E9;">Vídeo de testimonio próximamente</span>
-          </video>
-        </div>
         <div class="testimonial-text">
           "El sistema es tan sencillo que no me lo creía. Yo solo conecté la oportunidad y el equipo de expertos se encargó del papeleo y las visitas. Los honorarios me llegaron puntuales."
         </div>
@@ -1314,12 +1311,6 @@
         <div class="testimonial-role">Prescriptor a tiempo parcial</div>
       </div>
       <div class="testimonial-card">
-        <div class="video-container" style="margin-bottom: 1.5rem; aspect-ratio: 9/16; background:#1a0b54; display:flex; align-items:center; justify-content:center;">
-          <video controls="" playsinline="" poster="" style="width:100%; height:100%; object-fit:cover;">
-            <source src="testimonio3.mp4" type="video/mp4">
-            <span style="color:#D1C4E9;">Vídeo de testimonio próximamente</span>
-          </video>
-        </div>
         <div class="testimonial-text">
           "Estaba buscando una forma de diversificar mis ingresos y Three me dio la hoja de ruta clara. No sé nada de papeleos o certificados técnicos, pero solo detectando oportunidades genero excelentes ingresos."
         </div>
